@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "# ---- Install tensorflow with anaconda\n\n\n\n# install Tensorflow in Python\n# install python3.5 in virtual env (snakes)\n#   activate snakes\n\n# install tensorflow\n#   pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/windows/cpu/tensorflow-1.0.1-cp35-cp35m-win_amd64.whl\n\n# install latest Rcpp, which is not in MRO\ninstall.packages('C:/Users/j.kromme/Documents/rcpp/Rcpp', repos = NULL, type=\"source\")\n\n# install reticulate (python binding), whichi is not in MRO\ndevtools::install_github(\"rstudio/reticulate\")\n\n# install tensorflow\ndevtools::install_github(\"rstudio/tensorflow\")\n\n# use conda virtual environment\nlibrary(reticulate)\nuse_condaenv(\"snakes\")\n\n# check\nlibrary(tensorflow)\n",
+    "created" : 1489938319008.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1179003663",
+    "id" : "C4EED311",
+    "lastKnownWriteTime" : 1489939236,
+    "last_content_update" : 1489939236826,
+    "path" : "C:/Users/j.kromme/Desktop/sandbox/tensorflow-playground/00 install tensorflow.R",
+    "project_path" : "00 install tensorflow.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "# https://rstudio.github.io/tensorflow/\n\n\nlibrary(tensorflow)\n\n# Create 100 phony x, y data points, y = x * 0.1 + 0.3\nx_data <- runif(100, min=0, max=1)\ny_data <- x_data * 0.1 + 0.3\n\n# Try to find values for W and b that compute y_data = W * x_data + b\n# (We know that W should be 0.1 and b 0.3, but TensorFlow will\n# figure that out for us.)\nW <- tf$Variable(tf$random_uniform(shape(1L), -1.0, 1.0))\nb <- tf$Variable(tf$zeros(shape(1L)))\ny <- W * x_data + b\n\n# Minimize the mean squared errors.\nloss <- tf$reduce_mean((y - y_data) ^ 2)\noptimizer <- tf$train$GradientDescentOptimizer(0.5)\ntrain <- optimizer$minimize(loss)\n\n# Launch the graph and initialize the variables.\nsess = tf$Session()\nsess$run(tf$global_variables_initializer())\n\n# Fit the line (Learns best fit is W: 0.1, b: 0.3)\nfor (step in 1:201) {\n  sess$run(train)\n  if (step %% 20 == 0)\n    cat(step, \"-\", sess$run(W), sess$run(b), \"\\n\")\n}\n",
+    "created" : 1489938753515.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4250604876",
+    "id" : "F76CFCEB",
+    "lastKnownWriteTime" : 1489939258,
+    "last_content_update" : 1489939258919,
+    "path" : "C:/Users/j.kromme/Desktop/sandbox/tensorflow-playground/01 simple tutorial.R",
+    "project_path" : "01 simple tutorial.R",
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

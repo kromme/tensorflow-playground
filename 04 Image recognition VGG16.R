@@ -63,7 +63,8 @@ restorer$restore(sess, './vgg_16.ckpt')
 library(jpeg)
 img1 <- readJPEG('images/apple.jpg')
 img1 <- readJPEG('images/football.jpg')
-img1 <- readJPEG('images/busy_street.jpg')
+img1 <- readJPEG('images/tennis.jpg')
+img1 <- readJPEG('images/ksnake.jpg')
 d = dim(img1)
 imgs = array(255*img1, dim = c(1, d[1], d[2], d[3]))
 
@@ -93,3 +94,4 @@ for (id in idx) {
 library(ggplot2)
 ggplot(data.frame(d=1:3)) + annotation_custom(g) + 
   annotate('text',x=0.05,y=0.05,label=text, size=7, hjust = 0, vjust=0, color='blue') + xlim(0,1) + ylim(0,1) 
+

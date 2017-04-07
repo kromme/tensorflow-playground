@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "rm(list = ls())\n\n# reticulate is package to talk to python\nlibrary(reticulate)\n\n# snakes is the virtualenv with tensorflow\nuse_condaenv(\"snakes\")\n\nlibrary(tensorflow)\n\n# The TensorFlow API is divided into modules. The top-level entry point to the API is tf\nsess = tf$Session()\n\nhello <- tf$constant('Hello, TensorFlow!')\nsess$run(hello)\n\na <- tf$constant(10L)\nb <- tf$constant(32L)\nsess$run(a + b)\n\n\n# --- sub modules\n# Call the conv2d function within the nn sub-module\n# tf$nn$conv2d(x, W, strides=c(1L, 1L, 1L, 1L), padding='SAME')\n\n# Create an optimizer from the train sub-module\n# optimizer <- tf$train$GradientDescentOptimizer(0.5)\n\n# --- numeric types\n# The TensorFlow API is more strict about numeric types than is customary in R'\n# Many TensorFlow function parameters require integers (e.g. for tensor dimensions) and in those cases it’s important to use an R integer literal (e.g. 1L)\n\n\n# --- Numeric Lists\n# there are a couple of special cases (mostly involving specifying the shapes of tensors) where you may need to create a numeric list with an embedded NULL or a numeric list with only a single item\n# in order to force the argument to be treated as a list rather than a scalar, and to ensure that NULL elements are preserved\n\nx <- tf$placeholder(tf$float32, list(NULL, 784L))\nW <- tf$Variable(tf$zeros(list(784L, 10L)))\nb <- tf$Variable(tf$zeros(list(10L)))\n\n# --- Tensor Shapes\n# This need to use list rather than c is very common for shape arguments \n# For these cases there is a shape function which you can use to make the calling syntax a bit more more clear\n\nx <- tf$placeholder(tf$float32, shape(NULL, 784L))\nW <- tf$Variable(tf$zeros(shape(784L, 10L)))\nb <- tf$Variable(tf$zeros(shape(10L)))\n\n# --- Tensor indexes\n# Tensor indexes within the TensorFlow API are 0-based (rather than 1-based as R vectors are)\n# This typically comes up when specifying the dimension of a tensor to operate on (e.g with a function like  tf$reduce_mean or tf$argmax). The first dimension of a tensor is specified as 0L, the second 1L, and so on. For example:\n  \n# call tf$reduce_mean on the second dimension of the specified tensor\ncross_entropy <- tf$reduce_mean(\n    -tf$reduce_sum(y_ * tf$log(y_conv), reduction_indices=1L)\n  )\n\n# call tf$argmax on the second dimension of the specified tensor\ncorrect_prediction <- tf$equal(tf$argmax(y_conv, 1L), tf$argmax(y_, 1L))\n\n\n\n\n\n\n\n# Create 100 phony x, y data points, y = x * 0.1 + 0.3\nx_data <- runif(100, min=0, max=1)\ny_data <- x_data * 0.1 + 0.3\n\n# Try to find values for W and b that compute y_data = W * x_data + b\n# (We know that W should be 0.1 and b 0.3, but TensorFlow will\n# figure that out for us.)\nW <- tf$Variable(tf$random_uniform(shape(1L), -1.0, 1.0))\nb <- tf$Variable(tf$zeros(shape(1L)))\ny <- W * x_data + b\n\n# Minimize the mean squared errors.\nloss <- tf$reduce_mean((y - y_data) ^ 2)\noptimizer <- tf$train$GradientDescentOptimizer(0.5)\ntrain <- optimizer$minimize(loss)\n\n# Launch the graph and initialize the variables.\nsess = tf$Session()\nsess$run(tf$global_variables_initializer())\n\n# Fit the line (Learns best fit is W: 0.1, b: 0.3)\nfor (step in 1:201) {\n  sess$run(train)\n  if (step %% 20 == 0)\n    cat(step, \"-\", sess$run(W), sess$run(b), \"\\n\")\n}",
+    "created" : 1491421220462.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2116116052",
+    "id" : "D9D67CB5",
+    "lastKnownWriteTime" : 1491422430,
+    "last_content_update" : 1491422430619,
+    "path" : "C:/Users/j.kromme/Desktop/sandbox/tensorflow-playground/00 introduction.R",
+    "project_path" : "00 introduction.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
